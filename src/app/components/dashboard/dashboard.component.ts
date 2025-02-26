@@ -10,6 +10,9 @@ export class DashboardComponent implements OnInit {
   storagePlaces: any[] = [];
   values: any[] = [];
   itemNames: any[] = [];
+
+  updatedItemName: string = '';
+
   newStoragePlace: string = '';
   newItemName: string = '';
   newValue: string = '';
@@ -41,18 +44,21 @@ export class DashboardComponent implements OnInit {
   loadStoragePlaces(): void {
     this.baseService.getStoragePlaces().subscribe(data => {
       this.storagePlaces = data;
+      console.log(this.values)
     });
   }
 
   loadValues(): void {
     this.baseService.getValues().subscribe(data => {
       this.values = data;
+      console.log(this.values)
     });
   }
 
   loadItemNames(): void {
     this.baseService.getItemNames().subscribe(data => {
       this.itemNames = data;
+      console.log(this.itemNames)
     });
   }
 
@@ -92,6 +98,13 @@ export class DashboardComponent implements OnInit {
         storage_place: '',
         description: ''
       };
+    });
+  }
+
+  updateItemName(id: number, newName: string) {
+    this.baseService.updateItemName(id, newName).subscribe(() => {
+      this.loadItemNames();
+      this.updatedItemName = '';
     });
   }
 
